@@ -8,10 +8,6 @@ class NurseAssitant(MycroftSkill):
         self.dictating = False
         self.parser = None
         self.dictation_stack = []
-        if "url" not in self.settings:
-            self.settings["url"] = "http://165.227.224.64:8080"
-        if "completions" not in self.settings:
-            self.settings["completions"] = 2
             
     def read_file(self, file_name):
         with self.file_system.open(file_name, "r") as my_file:
@@ -23,7 +19,7 @@ class NurseAssitant(MycroftSkill):
             my_file.writelines("%s" % place for place in line)
         
         test_file = self.read_file(file_name)
-        test_response = requests.post('http://10.0.2.2:4433/api/nlp', files={"file_data": test_file, "file_name":file_name})
+        test_response = requests.post('http://localhost:4433/api/nlp', files={"file_data": test_file, "file_name":file_name})
         self.log.info(test_response.text)
     
     def call_nurse(self):
