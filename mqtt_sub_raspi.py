@@ -47,7 +47,7 @@ def subscribe(client: mqtt_client):
 
         # event_message is sent by Homepal as a mqtt message.
         # event_message = 1 means an adverse event was detected and heynurse needs to be activated.
-        if int(msgData["event_message"]) == 1:
+        if int(msgData) == 1:
 
             subprocess.call(shlex.split('mycroft-speak "Are you alright?"'))
             time.sleep(2)
