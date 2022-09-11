@@ -88,7 +88,7 @@ def publish(client, fileName, messageText):
         
         result = client.publish(topic, msg_out, 0, False)
         # result: [0, 1]
-        status = result[0]
+        #status = result[0]
 #        if status == 0:
 #            print(f"Send `{msg}` to topic `{topic}`")
 #        else:
@@ -101,16 +101,19 @@ def publish(client, fileName, messageText):
 
     os.chdir(savedCWD)
 
+
 # Entry Point for Publishing
 def run(paramFilepath, paramMessageText):
     client = None
     client = connect_mqtt()
-    client.loop_start()
-    try:
-        publish(client, paramFilepath, paramMessageText)
-    except Exception as e:
-        print("Error: ", e)
+    #client.loop_start()
+    status = publish(client, paramFilepath, paramMessageText)
+    #    if status = client.disconnect
+    #    return status
+    #except Exception as e:
+    #    print("Error: ", e)
     client.disconnect
+    return 0
    
 
 
