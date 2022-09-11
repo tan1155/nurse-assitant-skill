@@ -48,8 +48,12 @@ class NurseAssitant(MycroftSkill):
         print(called_function(file_name,line))
         print("I got here.")
 
-        # Publish the data to mqtt
-        print(publish_data("example.wav",line[0]))
+        try:
+            # Publish the data to mqtt
+            print(publish_data("example.wav",line[0]))
+        except Exception as e:
+            print("Error: ", e)
+
 
         #if exists(self.settings["file_path"]):
         #        test_voice_file = open(self.settings["file_path"], 'rb')
