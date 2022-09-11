@@ -103,9 +103,11 @@ def run(paramFilepath, paramMessageText):
     client.loop_start()
     try:
         publish(client, paramFilepath, paramMessageText)
+        client.disconnect
     except Exception as e:
         print("Error: ", e)
-    client.disconnect
+        client.disconnect
+   
 
 
 #if __name__ == '__main__':
