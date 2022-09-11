@@ -4,6 +4,7 @@ import wave
 import json
 import base64
 import subprocess
+import shlex
 from paho.mqtt import client as mqtt_client
 from .mqtt_config import MqttConfig as mqconfig
 from .mqtt_config import mqTopic, deviceID, audioFileDirectory, messageFileDirectory
