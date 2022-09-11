@@ -20,7 +20,7 @@ from mqtt_config import mqTopic, deviceID
 #varBroker = mqconfig.hostName
 varBroker = mqconfig.hostIP
 varPort = mqconfig.port
-varServerClientID = deviceID["heynurseServer"]
+varServerClientID = deviceID["device_011"]
 topic = mqTopic[4]
 # username = mqconfig.username
 # password = mqconfig.password
