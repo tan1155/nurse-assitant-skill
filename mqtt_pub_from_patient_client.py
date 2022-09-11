@@ -71,7 +71,7 @@ def publish(client, fileName, messageText):
         msg =   {
                 'frames': str(base64.b64encode(frames),'utf-8'),
                 'client_id': client_id,
-                'request_string': messageText,
+                'request_string': str(messageText),
                 'n_channels': str(n_channels),
                 'sample_width': str(sample_width),
                 'framerate': str(framerate),
