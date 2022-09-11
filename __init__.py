@@ -11,6 +11,7 @@ from datetime import timedelta
 from mycroft.util import record,play_wav
 from os.path import exists
 from .test import called_function
+from .mqtt_pub_from_patient_client import run as publish_data
 class NurseAssitant(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
@@ -40,12 +41,16 @@ class NurseAssitant(MycroftSkill):
             return False
     
     def write_line_to_file(self, file_name, line):
-        print("I am here")
         with self.file_system.open(file_name, "w") as my_file:
             my_file.writelines("%s" % place for place in line)
         
         test_file = self.read_file(file_name)
         print(called_function(file_name,line))
+        print("I got here.")
+
+        # Publish the data to mqtt
+        print(publish_data("example.wav","example.txt"))
+
         #if exists(self.settings["file_path"]):
         #        test_voice_file = open(self.settings["file_path"], 'rb')
         #        test_response = requests.post('http://172.24.158.178:4433/api/nlp', files={"audio_file": test_voice_file, "audio_file_name":"mycroft-recording.wav", "file_data": test_file,"file_name": file_name})
@@ -97,8 +102,8 @@ class NurseAssitant(MycroftSkill):
             self.dictating = False
             file_name = "example.txt"
             if self.file_system.exists(file_name):
-            	self.file_system.open(file_name, 'r+').truncate(0)
-            	self.write_line_to_file(file_name,self.dictation_stack)
+                self.file_system.open(file_name, 'r+').truncate(0)
+                self.write_line_to_file(file_name,self.dictation_stack)
             else:
             	self.write_line_to_file(file_name,self.dictation_stack)
     
