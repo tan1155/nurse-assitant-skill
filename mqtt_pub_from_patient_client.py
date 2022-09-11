@@ -50,7 +50,7 @@ def publish(client, fileName, messageText):
             break
         time.sleep(3)
 
-        print("before opening audio file to read" + fileName + " : " + messageText)
+        print("before opening audio file to read  " + fileName + " : " + messageText)
 
         with wave.open("{}/{}".format(audioFileDirectory, fileName), "rb") as objWavFile:    # Open WAV file in read-only mode.
             # Get basic information.
@@ -100,7 +100,7 @@ def publish(client, fileName, messageText):
 # Entry Point for Publishing
 def run(paramFilepath, paramMessageText):
     client = connect_mqtt()
-    client.loop_start()
+    #client.loop_start()
     try:
         publish(client, paramFilepath, paramMessageText)
     except Exception as e:
