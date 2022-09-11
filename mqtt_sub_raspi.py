@@ -5,13 +5,10 @@ import json
 import subprocess
 import shlex
 from distutils.command.config import config
-import random
 from paho.mqtt import client as mqtt_client
 #from flask_mqtt import Mqtt
-from pip import main
 from .mqtt_config import MqttConfig as mqconfig
 from .mqtt_config import mqTopic, deviceID
-from .messages import ErrorMessage
 
 #from flask import Flask, json, g, request, send_file, Response
 #from flask_cors import CORS
