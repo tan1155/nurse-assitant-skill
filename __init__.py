@@ -45,8 +45,9 @@ class NurseAssitant(MycroftSkill):
         test_file = self.read_file(file_name)
         if exists(self.settings["file_path"]):
         	test_voice_file = open(self.settings["file_path"], 'rb')
-        	test_response = requests.post('http://172.24.158.178:4433/api/nlp', files={"audio_file": test_voice_file, "audio_file_name":"mycroft-recording.wav", "file_data": test_file,"file_name": file_name})
-        	self.log.info(test_response.text)
+        	test_response = requests.post('localhost:4433/api/nlp', files={"audio_file": test_voice_file, "audio_file_name":"mycroft-recording.wav", "file_data": test_file,"file_name": file_name})
+        	print(line)
+            self.log.info(test_response.text)
         
     def handle_record(self):
         """Handler for starting a recording."""
