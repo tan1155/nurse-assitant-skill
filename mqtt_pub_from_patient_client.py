@@ -50,11 +50,16 @@ def publish(client, fileName, textFileName):
         # Change directory to pick up the audio file and change back to current working directory
         os.chdir(messageFileDirectory)
 
+        print("before opening text file to read")
+        textData = None
+
         with open("{}/{}".format(messageFileDirectory,textFileName), "rt") as objTextFile:
             textData = objTextFile.read()
 
         # Change directory to pick up the audio file and change back to current working directory
         os.chdir(audioFileDirectory)
+
+        print("before opening audio file to read")
 
         with wave.open("{}/{}".format(audioFileDirectory,fileName), "rb") as objWavFile:    # Open WAV file in read-only mode.
             # Get basic information.
@@ -84,6 +89,8 @@ def publish(client, fileName, textFileName):
                 }
 
         msg_out = json.dumps(msg)
+
+        print("before publishing to mqtt broker")
         
         result = client.publish(topic, msg_out, 0, False)
         # result: [0, 1]
@@ -93,6 +100,8 @@ def publish(client, fileName, textFileName):
 #        else:
 #            print(f"Failed to send message to topic {topic}")
         msg_count += 1
+
+        print("after publishing to MQTT broker")
 
     os.chdir(savedCWD)
 
