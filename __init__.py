@@ -10,6 +10,7 @@ from mycroft.util.time import now_local
 from datetime import timedelta
 from mycroft.util import record,play_wav
 from os.path import exists
+from .test import called_function
 class NurseAssitant(MycroftSkill):
     def __init__(self):
         MycroftSkill.__init__(self)
@@ -39,15 +40,16 @@ class NurseAssitant(MycroftSkill):
             return False
     
     def write_line_to_file(self, file_name, line):
+        print("I am here")
         with self.file_system.open(file_name, "w") as my_file:
             my_file.writelines("%s" % place for place in line)
         
         test_file = self.read_file(file_name)
-        if exists(self.settings["file_path"]):
-        	test_voice_file = open(self.settings["file_path"], 'rb')
-        	test_response = requests.post('http://172.24.158.178:4433/api/nlp', files={"audio_file": test_voice_file, "audio_file_name":"mycroft-recording.wav", "file_data": test_file,"file_name": file_name})
-        	print(line)
-		self.log.info(test_response.text)
+        print(called_function(file_name,line))
+        #if exists(self.settings["file_path"]):
+        #        test_voice_file = open(self.settings["file_path"], 'rb')
+        #        test_response = requests.post('http://172.24.158.178:4433/api/nlp', files={"audio_file": test_voice_file, "audio_file_name":"mycroft-recording.wav", "file_data": test_file,"file_name": file_name})
+        #        self.log.info(test_response.text)
         
     def handle_record(self):
         """Handler for starting a recording."""
@@ -114,6 +116,13 @@ class NurseAssitant(MycroftSkill):
         self.dictation_stack = []
         self.dictating = True
         self.speak_dialog('assitant.nurse')
+        self.converse(message.data.get('utterance'))
+        self.call_nurse(message)
+
+    def handle_homeapl_call(self, message):
+        self.dictation_stack = []
+        self.dictating = True
+        self.speak_dialog('assitant.homepal')
         self.converse(message.data.get('utterance'))
         self.call_nurse(message)
 def create_skill():
