@@ -64,7 +64,7 @@ def publish(client, fileName, messageText):
             frames          = objWavFile.readframes(n_frames)
             
             print("{} : {}".format(str(len(frames)),str(sample_width * n_frames)))
-            assert len(frames) == sample_width * n_frames
+            #assert len(frames) == sample_width * n_frames
 
         wave.Wave_read.close
 
