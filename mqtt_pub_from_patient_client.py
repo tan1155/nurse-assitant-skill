@@ -3,6 +3,7 @@ import time
 import wave
 import json
 import base64
+import subprocess
 from paho.mqtt import client as mqtt_client
 from .mqtt_config import MqttConfig as mqconfig
 from .mqtt_config import mqTopic, deviceID, audioFileDirectory, messageFileDirectory
@@ -94,6 +95,8 @@ def publish(client, fileName, messageText):
         msg_count += 1
 
         print("after publishing to MQTT broker")
+
+        subprocess.call(shlex.split('rm -rf example.wav'))
 
     os.chdir(savedCWD)
 
