@@ -97,7 +97,7 @@ def publish(client, fileName, messageText):
 
         print("after publishing to MQTT broker")
 
-        subprocess.call(shlex.split('rm -rf example.wav'))
+        #subprocess.call(shlex.split('rm -rf example.wav'))
 
     os.chdir(savedCWD)
 
