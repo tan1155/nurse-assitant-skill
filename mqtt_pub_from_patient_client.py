@@ -100,7 +100,7 @@ def publish(client, fileName, messageText):
 # Entry Point for Publishing
 def run(paramFilepath, paramMessageText):
     client = connect_mqtt()
-    client.loop_start()
+    #client.loop_start()
     try:
         publish(client, paramFilepath, paramMessageText)
     except Exception as e:
