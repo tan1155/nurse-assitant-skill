@@ -37,9 +37,12 @@ def connect_mqtt():
     return client
 
 # Publish Message Function
-def publish(client, fileName, textFileName):
+def publish(client, fileName, messageText):
     # Save the current working directory to reset the CWD after reading the file.
     savedCWD = os.getcwd()
+
+    # Change directory to pick up the audio file and change back to current working directory
+    os.chdir(audioFileDirectory)
 
     msg_count = 0
     while True:
@@ -47,21 +50,9 @@ def publish(client, fileName, textFileName):
             break
         time.sleep(3)
 
-        # Change directory to pick up the audio file and change back to current working directory
-        os.chdir(messageFileDirectory)
+        print("before opening audio file to read" + fileName + " : " + messageText)
 
-        print("before opening text file to read")
-        textData = None
-
-        with open("{}/{}".format(messageFileDirectory,textFileName), "rt") as objTextFile:
-            textData = objTextFile.read()
-
-        # Change directory to pick up the audio file and change back to current working directory
-        os.chdir(audioFileDirectory)
-
-        print("before opening audio file to read")
-
-        with wave.open("{}/{}".format(audioFileDirectory,fileName), "rb") as objWavFile:    # Open WAV file in read-only mode.
+        with wave.open("{}/{}".format(audioFileDirectory, fileName), "rb") as objWavFile:    # Open WAV file in read-only mode.
             # Get basic information.
             n_channels      = objWavFile.getnchannels() # Number of channels. (1=Mono, 2=Stereo)
             sample_width    = objWavFile.getsampwidth() # Sample width in bytes
@@ -71,7 +62,8 @@ def publish(client, fileName, textFileName):
             comp_name       = objWavFile.getcompname()  # Compression name
             
             frames          = objWavFile.readframes(n_frames)
-        
+            
+            print("{} : {}".format(str(len(frames)),str(sample_width * n_frames)))
             assert len(frames) == sample_width * n_frames
 
         wave.Wave_read.close
@@ -79,7 +71,7 @@ def publish(client, fileName, textFileName):
         msg =   {
                 'frames': str(base64.b64encode(frames),'utf-8'),
                 'client_id': client_id,
-                'request_string': textData,
+                'request_string': messageText[0],
                 'n_channels': str(n_channels),
                 'sample_width': str(sample_width),
                 'framerate': str(framerate),
@@ -106,11 +98,11 @@ def publish(client, fileName, textFileName):
     os.chdir(savedCWD)
 
 # Entry Point for Publishing
-def run(paramFilepath, paramTextFilepath):
+def run(paramFilepath, paramMessageText):
     client = connect_mqtt()
     client.loop_start()
     try:
-        publish(client,paramFilepath,paramTextFilepath)
+        publish(client, paramFilepath, paramMessageText)
     except Exception as e:
         print("Error: ", e)
     client.disconnect

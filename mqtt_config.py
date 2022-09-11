@@ -21,7 +21,7 @@ deviceID = {
 
 # Directory where the audio file from Mycroft is stored
 audioFileDirectory = "/home/francis/mycroft-core/"
-messageFileDirectory = "/home/francis/.config/mycroft/skills/NurseAssitant/"
+messageFileDirectory = "home/francis/.config/mycroft/skills/NurseAssitant/"
 
 # Connection details to connect to MQTT broker
 class MqttConfig:

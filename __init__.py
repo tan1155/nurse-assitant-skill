@@ -49,7 +49,7 @@ class NurseAssitant(MycroftSkill):
         print("I got here.")
 
         # Publish the data to mqtt
-        print(publish_data("example.wav","example.txt"))
+        print(publish_data("example.wav",line[0]))
 
         #if exists(self.settings["file_path"]):
         #        test_voice_file = open(self.settings["file_path"], 'rb')
