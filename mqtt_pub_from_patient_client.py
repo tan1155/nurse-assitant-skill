@@ -48,7 +48,7 @@ def publish(client, fileName, messageText):
 
     msg_count = 0
     while True:
-        if msg_count == 1:
+        if msg_count == 2:
             break
         time.sleep(3)
 
@@ -107,10 +107,6 @@ def run(paramFilepath, paramMessageText):
     client = connect_mqtt()
     client.loop_start()
     publish(client, paramFilepath, paramMessageText)
-    #    if status = client.disconnect
-    #    return status
-    #except Exception as e:
-    #    print("Error: ", e)
     client.disconnect
     return 0
    
