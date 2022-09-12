@@ -105,13 +105,13 @@ def publish(client, fileName, messageText):
 # Entry Point for Publishing
 def run(paramFilepath, paramMessageText):
     client = connect_mqtt()
-    #client.loop_start()
+    client.loop_start()
     publish(client, paramFilepath, paramMessageText)
     #    if status = client.disconnect
     #    return status
     #except Exception as e:
     #    print("Error: ", e)
-    #client.disconnect
+    client.disconnect
     return 0
    
 
