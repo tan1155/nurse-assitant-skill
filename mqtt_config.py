@@ -20,7 +20,7 @@ deviceID = {
 }
 
 # Directory where the audio file from Mycroft is stored
-audioFileDirectory = "~/mycroft-core/"
+audioFileDirectory = "/home/raspi4/mycroft-core/"
 messageFileDirectory = None
 
 # Connection details to connect to MQTT broker
