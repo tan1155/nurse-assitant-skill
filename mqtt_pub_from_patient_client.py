@@ -111,7 +111,7 @@ def run(paramFilepath, paramMessageText):
     #    return status
     #except Exception as e:
     #    print("Error: ", e)
-    client.disconnect
+    #client.disconnect
     return 0
    
 
