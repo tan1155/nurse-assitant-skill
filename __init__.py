@@ -10,7 +10,6 @@ from mycroft.util.time import now_local
 from datetime import timedelta
 from mycroft.util import record,play_wav
 from os.path import exists
-from .test import called_function
 from .mqtt_pub_from_patient_client import run as publish_data
 class NurseAssitant(MycroftSkill):
     def __init__(self):
@@ -44,8 +43,6 @@ class NurseAssitant(MycroftSkill):
         with self.file_system.open(file_name, "w") as my_file:
             my_file.writelines("%s" % place for place in line)
         
-        test_file = self.read_file(file_name)
-        print(called_function(file_name,line))
         print("I got here.")
 
         try:
