@@ -31,8 +31,8 @@ class MqttConfig:
         self.mqTopicID = 0
     
     #hostName    = "localhost"
-    hostIP      = "francis-vapor17x.local"
-    #hostIP      = "192.168.1.10"
+    #hostIP      = "francis-vapor17x.local"
+    hostIP      = "192.168.1.87"
     port        = 1883
 #    topic       = mqTopic[self.mqTopicID]
     username    = ""
