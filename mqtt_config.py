@@ -20,8 +20,8 @@ deviceID = {
 }
 
 # Directory where the audio file from Mycroft is stored
-audioFileDirectory = "/home/francis/mycroft-core/"
-messageFileDirectory = "home/francis/.config/mycroft/skills/NurseAssitant/"
+audioFileDirectory = "~/mycroft-core/"
+messageFileDirectory = None
 
 # Connection details to connect to MQTT broker
 class MqttConfig:
@@ -31,7 +31,7 @@ class MqttConfig:
         self.mqTopicID = 0
     
     #hostName    = "localhost"
-    hostIP      = "francis-vapor17x.local"
+    hostIP      = "francis-vapor17x"
     #hostIP      = "192.168.1.10"
     port        = 1883
 #    topic       = mqTopic[self.mqTopicID]
