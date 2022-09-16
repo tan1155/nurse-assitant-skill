@@ -106,9 +106,12 @@ def publish(client, fileName, messageText):
 def run(paramFilepath, paramMessageText,paramCounter=0):
     paramCounter += 1
     print(paramCounter)
-    client = connect_mqtt()
-    client.loop_start()
-    publish(client, paramFilepath, paramMessageText)
+    if client:
+        client.disconnect
+    else:
+        client = connect_mqtt()
+        client.loop_start()
+        publish(client, paramFilepath, paramMessageText)
     #    if status = client.disconnect
     #    return status
     #except Exception as e:
