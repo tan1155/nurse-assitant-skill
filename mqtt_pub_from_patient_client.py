@@ -113,7 +113,7 @@ def run(paramFilepath, paramMessageText):
     #except Exception as e:
     #    print("Error: ", e)
     client.disconnect
-    return 0
+    #return 0
    
 
 
