@@ -85,8 +85,7 @@ def publish(client, fileName, messageText):
         msg_out = json.dumps(msg)
 
         print("before publishing to mqtt broker")
-        
-        result = client.publish(topic, msg_out, 0, False)
+        rc, mid = client.publish(topic, msg_out, 0, False)
         # result: [0, 1]
         #status = result[0]
 #        if status == 0:
@@ -94,7 +93,8 @@ def publish(client, fileName, messageText):
 #        else:
 #            print(f"Failed to send message to topic {topic}")
         msg_count += 1
-
+        print("rc : {}".format(rc))
+        print("mid : {}".format(mid))
         print("after publishing to MQTT broker")
 
         #subprocess.call(shlex.split('rm -rf example.wav'))
@@ -104,7 +104,8 @@ def publish(client, fileName, messageText):
 # Entry Point for Publishing
 def run(paramFilepath, paramMessageText):
     client = connect_mqtt()
+    client.stop()
+    client.publish()
     client.loop_start()
     publish(client, paramFilepath, paramMessageText)
-    client.loop_stop()
     client.disconnect
