@@ -125,12 +125,6 @@ class NurseAssitant(MycroftSkill):
         self.converse(message.data.get('utterance'))
         self.call_nurse(message)
 
-    def handle_homeapl_call(self, message):
-        self.dictation_stack = []
-        self.dictating = True
-        self.speak_dialog('assitant.homepal')
-        self.converse(message.data.get('utterance'))
-        self.call_nurse(message)
 def create_skill():
     return NurseAssitant()
 
