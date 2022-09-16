@@ -104,9 +104,7 @@ def publish(client, fileName, messageText):
 
 
 # Entry Point for Publishing
-def run(paramFilepath, paramMessageText,paramCounter=0):
-    paramCounter += 1
-    print(paramCounter)
+def run(paramFilepath, paramMessageText):
     client = connect_mqtt()
     client.loop_start()
     publish(client, paramFilepath, paramMessageText)
