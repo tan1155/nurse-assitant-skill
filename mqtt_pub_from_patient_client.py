@@ -105,7 +105,6 @@ def publish(client, fileName, messageText):
 def run(paramFilepath, paramMessageText):
     client = connect_mqtt()
     client.loop_stop()
-    client.publish()
     client.loop_start()
     publish(client, paramFilepath, paramMessageText)
     client.disconnect
