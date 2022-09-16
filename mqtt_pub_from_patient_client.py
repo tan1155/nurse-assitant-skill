@@ -100,11 +100,11 @@ def publish(client, fileName, messageText):
         #subprocess.call(shlex.split('rm -rf example.wav'))
 
     os.chdir(savedCWD)
-    client.disconnect
-
 
 # Entry Point for Publishing
 def run(paramFilepath, paramMessageText):
     client = connect_mqtt()
     client.loop_start()
     publish(client, paramFilepath, paramMessageText)
+    client.loop_stop()
+    client.disconnect
