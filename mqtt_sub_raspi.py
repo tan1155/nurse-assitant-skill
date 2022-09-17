@@ -67,6 +67,7 @@ def subscribe(client: mqtt_client):
 #def run():
 #time.sleep(5)
 client = connect_mqtt()
+#client.loop_start()
 subscribe(client)
 client.loop_forever()
 
