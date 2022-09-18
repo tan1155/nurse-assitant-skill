@@ -20,8 +20,8 @@ deviceID = {
 }
 
 # Directory where the audio file from Mycroft is stored
-#audioFileDirectory = "/home/raspi4/mycroft-core/" # This line is used in the raspberry pi installation.
-audioFileDirectory = "/home/francis/mycroft-core/" # This line is used in the ubuntu mycroft
+audioFileDirectory = "/home/raspi4/mycroft-core/" # This line is used in the raspberry pi installation.
+#audioFileDirectory = "/home/francis/mycroft-core/" # This line is used in the ubuntu mycroft
 
 messageFileDirectory = None
 
