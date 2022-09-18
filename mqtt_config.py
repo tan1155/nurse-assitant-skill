@@ -20,7 +20,9 @@ deviceID = {
 }
 
 # Directory where the audio file from Mycroft is stored
-audioFileDirectory = "/home/raspi4/mycroft-core/"
+#audioFileDirectory = "/home/raspi4/mycroft-core/" # This line is used in the raspberry pi installation.
+audioFileDirectory = "/home/francis/mycroft-core/" # This line is used in the ubuntu mycroft
+
 messageFileDirectory = None
 
 # Connection details to connect to MQTT broker
@@ -32,8 +34,8 @@ class MqttConfig:
     
     #hostName    = "localhost"
     #hostIP      = "francis-vapor17x.local"
-    #hostIP      = "192.168.1.87"""
-    hostIP      = "172.20.10.4"
+    #hostIP      = "192.168.1.87""
+    hostIP      = "172.20.10.2"
     port        = 1883
 #    topic       = mqTopic[self.mqTopicID]
     username    = ""
