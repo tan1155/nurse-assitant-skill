@@ -94,6 +94,7 @@ class NurseAssitant(MycroftSkill):
                                          self.start_time).total_seconds()
 
     def call_nurse(self,message):
+        print("Entered call_nurse().")
         if self.dictating:
             self.dictating = False
             file_name = "example.txt"
@@ -104,21 +105,26 @@ class NurseAssitant(MycroftSkill):
             	self.write_line_to_file(file_name,self.dictation_stack)
 
     def converse(self, utterances, lang="en-us"):
+        print("Entered converse().")
         if self.dictating:
+            print("self.dictating == True")
             if utterances:
-
-                if utterances in self.read_file("/home/francis/vocab/en-us/assitant-nurse.txt"):
+                if utterances in self.read_file("/home/francis/mycroft-core/skills/nurse-assitant-skill/vocab/en-us/assitant-nurse.txt"):
                     self.log.info("Dictating: " + utterances)
                     self.dictation_stack.append(utterances)
+                    print("Utterance is True and found in assitant-nurse.txt.")
                     return True
                 else:
                     self.remove_context("DictationKeyword")
-                    publish_data(None,None,4)
+                    print("Utterance is True but but not found and supposed to trigger to ask question.")
+                    #publish_data(None,None,4)
                     return False
             else:
+                print("Utterance is False.")
                 self.remove_context("DictationKeyword")
                 return False
         else:
+            print("self.dictating == False")
             self.remove_context("DictationKeyword")
             #publish_data(None,None,4)
             return False
@@ -127,9 +133,15 @@ class NurseAssitant(MycroftSkill):
     def handle_assitant_nurse(self, message):
         self.dictation_stack = []
         self.dictating = True
+        print("Before speak_dialog")
         self.speak_dialog('assitant.nurse')
-        self.converse(message.data.get('utterance'))
-        self.call_nurse(message)
+        print("Before entering converse().")
+        if self.converse(message.data.get('utterance')):
+            print("converse() returned True")
+            self.call_nurse(message)
+        else:
+            print("converse() returned False")
+            pass
 
 def create_skill():
     return NurseAssitant()
