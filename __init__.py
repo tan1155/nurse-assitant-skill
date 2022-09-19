@@ -47,7 +47,7 @@ class NurseAssitant(MycroftSkill):
 
         try:
             # Publish the data to mqtt
-            publish_data("example.wav",line[0],1)
+            publish_data("example.wav",line,1)
             print("I got out of publish_data function.")
         except Exception as e:
             print("Error: ", e)
