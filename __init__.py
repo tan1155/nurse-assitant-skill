@@ -132,8 +132,8 @@ class NurseAssitant(MycroftSkill):
         else:
             print("self.dictating == False")
             self.remove_context("DictationKeyword")
-            self.handle_assitant_nurse(message)
-            return False
+            publish_data(None,None,4)
+            return True
 
     @intent_file_handler('assitant.nurse.intent')
     def handle_assitant_nurse(self, message):
