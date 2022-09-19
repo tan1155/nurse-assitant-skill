@@ -105,11 +105,17 @@ class NurseAssitant(MycroftSkill):
             	self.write_line_to_file(file_name,self.dictation_stack)
 
     def converse(self, utterances, lang="en-us"):
-        print("Entered converse() : {}".format(utterances[0]))
+        print("Entered converse()")
         if self.dictating:
             print("self.dictating == True")
             if utterances:
-                if utterances[0] in self.read_file("/home/francis/mycroft-core/skills/nurse-assitant-skill/vocab/en-us/assitant-nurse.txt"):
+                utteranceIsTrue = False
+                for item in utterances:
+                    if utterances in self.read_file("/home/francis/mycroft-core/skills/nurse-assitant-skill/vocab/en-us/assitant-nurse.txt"):
+                        utteranceIsTrue = True
+                    else:
+                        utteranceIsTrue = False
+                if utteranceIsTrue:    
                     self.log.info("Dictating: " + utterances)
                     self.dictation_stack.append(utterances)
                     print("Utterance is True and found in assitant-nurse.txt.")
