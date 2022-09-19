@@ -107,7 +107,7 @@ class NurseAssitant(MycroftSkill):
         if self.dictating:
             if utterances:
 
-                if utterances in self.read_file("/vocab/en-us/assitant.nurse.voc"):
+                if utterances in self.read_file("/home/francis/vocab/en-us/assitant-nurse.txt"):
                     self.log.info("Dictating: " + utterances)
                     self.dictation_stack.append(utterances)
                     return True
