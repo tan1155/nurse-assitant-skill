@@ -90,7 +90,7 @@ def publish(client, fileName, messageText, topicIndex):
             print("before publishing to mqtt broker")
             rc, mid = client.publish(topicToServer, msg_out, 0, False)
 
-        elif topicIndex and topicIndex == 5:
+        elif topicIndex and topicIndex == 4:
 
             print("entered repeat question condition")
 
