@@ -111,7 +111,7 @@ class NurseAssitant(MycroftSkill):
             if utterances:
                 utteranceIsTrue = False
                 for item in utterances:
-                    if utterances in self.read_file("/home/francis/mycroft-core/skills/nurse-assitant-skill/vocab/en-us/assitant-nurse.txt"):
+                    if item in self.read_file("/home/francis/mycroft-core/skills/nurse-assitant-skill/vocab/en-us/assitant-nurse.txt"):
                         utteranceIsTrue = True
                     else:
                         utteranceIsTrue = False
