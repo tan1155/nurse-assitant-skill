@@ -114,7 +114,7 @@ class NurseAssitant(MycroftSkill):
                 else:
                     self.remove_context("DictationKeyword")
                     publish_data(None,None,4)
-                    break
+                    return False
             else:
                 self.remove_context("DictationKeyword")
                 return False
