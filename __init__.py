@@ -105,7 +105,7 @@ class NurseAssitant(MycroftSkill):
 
     def converse(self, utterances, lang="en-us"):
         if self.dictating:
-            if utterances and self.speak_vocab(utterances[0],"assitant.nurse"):
+            if utterances and self.voc_match(utterances[0],"assitant.nurse"):
                 self.log.info("Dictating: " + utterances)
                 self.dictation_stack.append(utterances)
                 return True
