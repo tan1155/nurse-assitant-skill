@@ -14,7 +14,7 @@ from .mqtt_config import mqTopic, deviceID, audioFileDirectory, messageFileDirec
 broker = mqconfig.hostIP
 port = mqconfig.port
 topicToServer = mqTopic[1]
-topicToRepeatQuestion = mqTopic[5]
+topicToRepeatQuestion = mqTopic[4]
 client_id = deviceID["device_010"]
 
 # Here's the audio text string to be passed.
