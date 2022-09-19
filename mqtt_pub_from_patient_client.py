@@ -53,9 +53,9 @@ def publish(client, fileName, messageText, topicIndex):
             break
         time.sleep(3)
 
-        print("before opening audio file to read  " + fileName + " : " + messageText[0])
-
         if topicIndex and topicIndex == 1:
+
+            print("before opening audio file to read  " + fileName + " : " + messageText[0])
 
             with wave.open("{}/{}".format(audioFileDirectory, fileName), "rb") as objWavFile:    # Open WAV file in read-only mode.
                 # Get basic information.
@@ -76,7 +76,7 @@ def publish(client, fileName, messageText, topicIndex):
             msg =   {
                     'frames': str(base64.b64encode(frames),'utf-8'),
                     'client_id': client_id,
-                    'request_string': str(messageText),
+                    'request_string': str(messageText[0]),
                     'n_channels': str(n_channels),
                     'sample_width': str(sample_width),
                     'framerate': str(framerate),
