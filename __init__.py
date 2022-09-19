@@ -115,7 +115,7 @@ class NurseAssitant(MycroftSkill):
                 return False
         else:
             self.remove_context("DictationKeyword")
-            publish_data(None,None,4)
+            #publish_data(None,None,4)
             return False
 
     @intent_file_handler('assitant.nurse.intent')
