@@ -101,8 +101,8 @@ def publish(client, fileName, messageText, topicIndex):
             print("before publishing to mqtt broker")
 
         msg_count += 1
-        print("rc : {}".format(rc))
-        print("mid : {}".format(mid))
+        #print("rc : {}".format(rc))
+        #print("mid : {}".format(mid))
         print("after publishing to MQTT broker")
 
         #subprocess.call(shlex.split('rm -rf example.wav'))
