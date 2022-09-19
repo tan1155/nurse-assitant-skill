@@ -53,7 +53,7 @@ def publish(client, fileName, messageText, topicIndex):
             break
         time.sleep(3)
 
-        print("before opening audio file to read  " + fileName + " : " + messageText)
+        print("before opening audio file to read  " + fileName + " : " + messageText[0])
 
         if topicIndex and topicIndex == 1:
 
