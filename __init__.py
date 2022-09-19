@@ -105,14 +105,14 @@ class NurseAssitant(MycroftSkill):
 
     def converse(self, utterances, lang="en-us"):
         if self.dictating:
-            #if utterances and self.voc_match(utterances,"assitant.nurse"):
-            self.log.info("Dictating: " + utterances)
-            self.dictation_stack.append(utterances)
-            return True
-            #else:
-                #self.remove_context("DictationKeyword")
-
-                #return False
+            if utterances:
+                self.log.info("Dictating: " + utterances)
+                self.dictation_stack.append(utterances)
+                return True
+            else:
+                self.remove_context("DictationKeyword")
+                publish_data(None,None,4)
+                return False
         else:
             self.remove_context("DictationKeyword")
             publish_data(None,None,4)
