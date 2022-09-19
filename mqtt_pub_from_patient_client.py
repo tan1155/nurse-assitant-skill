@@ -13,7 +13,8 @@ from .mqtt_config import mqTopic, deviceID, audioFileDirectory, messageFileDirec
 #broker = mqconfig.hostName
 broker = mqconfig.hostIP
 port = mqconfig.port
-topic = mqTopic[1]
+topicToServer = mqTopic[1]
+topicToRepeatQuestion = mqTopic[5]
 client_id = deviceID["device_010"]
 
 # Here's the audio text string to be passed.
@@ -39,7 +40,7 @@ def connect_mqtt():
     return client
 
 # Publish Message Function
-def publish(client, fileName, messageText):
+def publish(client, fileName, messageText, topicIndex):
     # Save the current working directory to reset the CWD after reading the file.
     savedCWD = os.getcwd()
 
@@ -54,44 +55,51 @@ def publish(client, fileName, messageText):
 
         print("before opening audio file to read  " + fileName + " : " + messageText)
 
-        with wave.open("{}/{}".format(audioFileDirectory, fileName), "rb") as objWavFile:    # Open WAV file in read-only mode.
-            # Get basic information.
-            n_channels      = objWavFile.getnchannels() # Number of channels. (1=Mono, 2=Stereo)
-            sample_width    = objWavFile.getsampwidth() # Sample width in bytes
-            framerate       = objWavFile.getframerate() # Frame rate
-            n_frames        = objWavFile.getnframes()   # Number of frames
-            comp_type       = objWavFile.getcomptype()  # Compression type (only supports "NONE")
-            comp_name       = objWavFile.getcompname()  # Compression name
-            
-            frames          = objWavFile.readframes(n_frames)
-            
-            print("{} : {}".format(str(len(frames)),str(sample_width * n_frames)))
-            #assert len(frames) == sample_width * n_frames
+        if topicIndex and topicIndex == 1:
 
-        wave.Wave_read.close
+            with wave.open("{}/{}".format(audioFileDirectory, fileName), "rb") as objWavFile:    # Open WAV file in read-only mode.
+                # Get basic information.
+                n_channels      = objWavFile.getnchannels() # Number of channels. (1=Mono, 2=Stereo)
+                sample_width    = objWavFile.getsampwidth() # Sample width in bytes
+                framerate       = objWavFile.getframerate() # Frame rate
+                n_frames        = objWavFile.getnframes()   # Number of frames
+                comp_type       = objWavFile.getcomptype()  # Compression type (only supports "NONE")
+                comp_name       = objWavFile.getcompname()  # Compression name
+                
+                frames          = objWavFile.readframes(n_frames)
+                
+                print("{} : {}".format(str(len(frames)),str(sample_width * n_frames)))
+                #assert len(frames) == sample_width * n_frames
 
-        msg =   {
-                'frames': str(base64.b64encode(frames),'utf-8'),
-                'client_id': client_id,
-                'request_string': str(messageText),
-                'n_channels': str(n_channels),
-                'sample_width': str(sample_width),
-                'framerate': str(framerate),
-                'n_frames': str(n_frames),
-                'comp_type': comp_type,
-                'comp_name': comp_name,
-                }
+            wave.Wave_read.close
 
-        msg_out = json.dumps(msg)
+            msg =   {
+                    'frames': str(base64.b64encode(frames),'utf-8'),
+                    'client_id': client_id,
+                    'request_string': str(messageText),
+                    'n_channels': str(n_channels),
+                    'sample_width': str(sample_width),
+                    'framerate': str(framerate),
+                    'n_frames': str(n_frames),
+                    'comp_type': comp_type,
+                    'comp_name': comp_name,
+                    }
 
-        print("before publishing to mqtt broker")
-        rc, mid = client.publish(topic, msg_out, 0, False)
-        # result: [0, 1]
-        #status = result[0]
-#        if status == 0:
-#            print(f"Send `{msg}` to topic `{topic}`")
-#        else:
-#            print(f"Failed to send message to topic {topic}")
+            msg_out = json.dumps(msg)
+
+            print("before publishing to mqtt broker")
+            rc, mid = client.publish(topicToServer, msg_out, 0, False)
+
+        elif topicIndex and topicIndex == 5:
+
+            print("entered repeat question condition")
+
+            msg_out = 1 # To request to repeat question
+
+            rc, mid = client.publish(topicToRepeatQuestion, msg_out, 0, False)
+
+            print("before publishing to mqtt broker")
+
         msg_count += 1
         print("rc : {}".format(rc))
         print("mid : {}".format(mid))
@@ -102,9 +110,9 @@ def publish(client, fileName, messageText):
     os.chdir(savedCWD)
 
 # Entry Point for Publishing
-def run(paramFilepath, paramMessageText):
+def run(paramFilepath, paramMessageText,paramTopicIndex):
     client = connect_mqtt()
     client.loop_start()
-    publish(client, paramFilepath, paramMessageText)
+    publish(client, paramFilepath, paramMessageText, paramTopicIndex)
     client.loop_stop()
     #client.disconnect

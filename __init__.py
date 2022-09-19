@@ -47,7 +47,7 @@ class NurseAssitant(MycroftSkill):
 
         try:
             # Publish the data to mqtt
-            publish_data("example.wav",line[0])
+            publish_data("example.wav",line[0],1)
             print("I got out of publish_data function.")
         except Exception as e:
             print("Error: ", e)
@@ -105,11 +105,17 @@ class NurseAssitant(MycroftSkill):
 
     def converse(self, utterances, lang="en-us"):
         if self.dictating:
-            self.log.info("Dictating: " + utterances)
-            self.dictation_stack.append(utterances)
-            return True
+            if utterances and self.speak_vocab(utterances[0],"assitant.nurse"):
+                self.log.info("Dictating: " + utterances)
+                self.dictation_stack.append(utterances)
+                return True
+            else:
+                self.remove_context("DictationKeyword")
+
+                return False
         else:
             self.remove_context("DictationKeyword")
+            publish_data(None,None,5)
             return False
 
     @intent_file_handler('assitant.nurse.intent')

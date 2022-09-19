@@ -8,7 +8,8 @@ mqTopic = {
     1 : "/heynurse/from_client/data",
     2 : "/heynurse/sms/ack",
     3 : "/heynurse/sms/send",
-    4 : "/heynurse/adv_event/broadcast"
+    4 : "/heynurse/adv_event/broadcast",
+    5 : "/heynurse/from_client/repeat_question"
 }
 
 deviceID = {
