@@ -105,7 +105,7 @@ class NurseAssitant(MycroftSkill):
             	self.write_line_to_file(file_name,self.dictation_stack)
 
     def converse(self, utterances, lang="en-us"):
-        print("Entered converse() : {}".format(str(self.utteranceLoopCount)))
+        print("Entered converse()")
         if self.dictating:
             print("self.dictating == True")
             if utterances:
