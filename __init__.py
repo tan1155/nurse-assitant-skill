@@ -22,6 +22,9 @@ class NurseAssitant(MycroftSkill):
         self.settings.setdefault("channels", 1)
         self.settings.setdefault("file_path", 'mycroft-recording.wav')
         self.settings.setdefault("duration", -1)
+
+        # Remove if not use in later part of code to count number of repeat questioning.
+        self.utteranceLoopCount = 0
         
     def initialize(self):
         self.add_event('recognizer_loop:record_begin',self.handle_record)
@@ -105,7 +108,8 @@ class NurseAssitant(MycroftSkill):
             	self.write_line_to_file(file_name,self.dictation_stack)
 
     def converse(self, utterances, lang="en-us"):
-        print("Entered converse()")
+        self.utteranceLoopCount += 1
+        print("Entered converse() : {}".format(str(self.utteranceLoopCount)))
         if self.dictating:
             print("self.dictating == True")
             if utterances:
@@ -132,8 +136,9 @@ class NurseAssitant(MycroftSkill):
         else:
             print("self.dictating == False")
             self.remove_context("DictationKeyword")
-            publish_data(None,None,4)
-            return True
+            if self.utteranceLoopCount > 3:
+                publish_data(None,None,4)
+            return False
 
     @intent_file_handler('assitant.nurse.intent')
     def handle_assitant_nurse(self, message):
