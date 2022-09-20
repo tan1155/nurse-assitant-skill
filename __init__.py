@@ -109,7 +109,7 @@ class NurseAssitant(MycroftSkill):
     def converse(self, utterances, lang="en-us"):
         print("Entered converse()")
         if self.dictating:
-            print("self.dictating == True")
+            print("self.dictating == True and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             #if utterances:
             #    utteranceIsTrue = False
             #    for item in utterances:
@@ -136,7 +136,7 @@ class NurseAssitant(MycroftSkill):
             self.cancel_all_repeating_events()
             return True
         else:
-            print("self.dictating == False")
+            print("self.dictating == False and utteranceLoopCount = {}".format(self.utteranceLoopCount))
             self.remove_context("DictationKeyword")
             if self.utteranceLoopCount < 4:
                 publish_data(None,None,4)
