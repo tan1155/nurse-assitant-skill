@@ -22,6 +22,8 @@ class NurseAssitant(MycroftSkill):
         self.settings.setdefault("channels", 1)
         self.settings.setdefault("file_path", 'mycroft-recording.wav')
         self.settings.setdefault("duration", -1)
+
+        self.utteranceLoopCount = 0
         
     def initialize(self):
         self.add_event('recognizer_loop:record_begin',self.handle_record)
@@ -134,9 +136,11 @@ class NurseAssitant(MycroftSkill):
             self.cancel_all_repeating_events()
             return True
         else:
+            self.utteranceLoopCount += 1
             print("self.dictating == False")
             self.remove_context("DictationKeyword")
-            publish_data(None,None,4)
+            if self.utteranceLoopCount < 4:
+                publish_data(None,None,4)
             self.cancel_all_repeating_events()
             return False
 
