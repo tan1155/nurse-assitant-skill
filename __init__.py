@@ -136,7 +136,7 @@ class NurseAssitant(MycroftSkill):
         else:
             print("self.dictating == False")
             self.remove_context("DictationKeyword")
-            if self.utteranceLoopCount > 3:
+            if self.utteranceLoopCount < 4:
                 publish_data(None,None,4)
             return False
 
