@@ -133,7 +133,7 @@ class NurseAssitant(MycroftSkill):
             print("self.dictating == False")
             self.remove_context("DictationKeyword")
             publish_data(None,None,4)
-            self.cancel_all_event()
+            self.cancel_all_repeating_events()
             return False
 
     @intent_file_handler('assitant.nurse.intent')
