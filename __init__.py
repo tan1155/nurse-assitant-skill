@@ -136,7 +136,7 @@ class NurseAssitant(MycroftSkill):
             self.cancel_all_repeating_events()
             return True
         else:
-            print("self.dictating == False and utteranceLoopCount = {}".format(self.utteranceLoopCount))
+            print("self.dictating == False and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             self.remove_context("DictationKeyword")
             if self.utteranceLoopCount < 4:
                 publish_data(None,None,4)
