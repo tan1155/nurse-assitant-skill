@@ -123,7 +123,7 @@ class NurseAssitant(MycroftSkill):
             self.remove_context("DictationKeyword")
             if self.utteranceLoopCount < 4 and self.alreadySpokenCount != 1 : # Only trigger repeat if not user not already spoken
                 print("Spoken Count Repeat = {}".format(self.alreadySpokenCount))
-                publish_data(None,None,4)
+                #publish_data(None,None,4)
                 self.utteranceLoopCount += 1
             else:
                 print("Spoken Count No Repeat= {}".format(self.alreadySpokenCount))
