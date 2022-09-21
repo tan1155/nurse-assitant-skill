@@ -113,12 +113,14 @@ class NurseAssitant(MycroftSkill):
         if self.dictating:
             print("self.dictating == True and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             print("Spoken Count = {}".format(self.alreadySpokenCount))
+            print("enterHandleAssitantNurse Dictating is True = {}".format(self.enterHandelAssitantNurse))
             self.alreadySpokenCount = 0
             self.log.info("Dictating: " + utterances)
             self.dictation_stack.append(utterances)
             self.cancel_all_repeating_events()
             self.alreadySpokenCount += 1 # Set this flag to indicate that already spoken and no need to repeat
             self.utteranceLoopCount = 0
+            print("set enterHandleAssitantNurse to 0")
             self.enterHandelAssitantNurse = 0
             return True
         else:
@@ -134,7 +136,7 @@ class NurseAssitant(MycroftSkill):
             self.cancel_all_repeating_events()
             #print("Spoken Count Before Repeat Call = {}".format(self.alreadySpokenCount))
             #self.alreadySpokenCount = 0
-            print("enterHandleAssitantNurse = {}".format(self.enterHandelAssitantNurse))
+            print("enterHandleAssitantNurse Dictating is False = {}".format(self.enterHandelAssitantNurse))
 
             if self.enterHandelAssitantNurse == 0:
                 publish_data(None,None,4)
@@ -156,10 +158,13 @@ class NurseAssitant(MycroftSkill):
         else:
             print("converse() returned False")
             if self.utteranceLoopCount < 2:
+                print("before calling enterHandleAssitantNurse publish_data function")
+                print("enterHandleAssitantNurse value in if clause of handleAssitantNurse function = {}".format(self.enterHandelAssitantNurse))
                 publish_data(None,None,4)
                 self.utteranceLoopCount += 1
             #self.alreadySpokenCount = 0
-            print("Spoken Count After Repeat Call = {}".format(self.alreadySpokenCount))
+            #print("Spoken Count After Repeat Call = {}".format(self.alreadySpokenCount))
+            print("set enterHandleAssitantNurse to 0 in else clause of handleAsssitnatNurse function")
             self.enterHandelAssitantNurse = 0
 
 def create_skill():
