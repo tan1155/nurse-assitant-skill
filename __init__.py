@@ -147,6 +147,7 @@ class NurseAssitant(MycroftSkill):
         else:
             print("converse() returned False")
             publish_data(None,None,4)
+            self.alreadySpokenCount = 1
             pass
 
 def create_skill():
