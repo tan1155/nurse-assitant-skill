@@ -24,7 +24,7 @@ class NurseAssitant(MycroftSkill):
         self.settings.setdefault("duration", -1)
 
         self.utteranceLoopCount = 1
-        self.alreadySpokenFlag = False
+        self.alreadySpokenCount = 1
         
     def initialize(self):
         self.add_event('recognizer_loop:record_begin',self.handle_record)
@@ -111,24 +111,24 @@ class NurseAssitant(MycroftSkill):
         print("Entered converse()")
         if self.dictating:
             print("self.dictating == True and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
-            print("Spoken Flag = {}".format(self.alreadySpokenFlag))
+            print("Spoken Count = {}".format(self.alreadySpokenCount))
             self.log.info("Dictating: " + utterances)
             self.dictation_stack.append(utterances)
             self.cancel_all_repeating_events()
-            self.alreadySpokenFlag = True # Set this flag to indicate that already spoken and no need to repeat
+            self.alreadySpokenCount += 1 # Set this flag to indicate that already spoken and no need to repeat
             return True
         else:
             print("self.dictating == False and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             self.remove_context("DictationKeyword")
-            if self.utteranceLoopCount < 4 and not self.alreadySpokenFlag: # Only trigger repeat if not user not already spoken
-                print("Spoken Flog = {}".format(self.alreadySpokenFlag))
+            if self.utteranceLoopCount < 4 and self.alreadySpokenCount < 2: # Only trigger repeat if not user not already spoken
+                print("Spoken Count Repeat = {}".format(self.alreadySpokenCount))
                 publish_data(None,None,4)
                 self.utteranceLoopCount += 1
             else:
-                print("Spoken Flog = {}".format(self.alreadySpokenFlag))
+                print("Spoken Count No Repeat= {}".format(self.alreadySpokenCount))
                 self.utteranceLoopCount = 0
             self.cancel_all_repeating_events()
-            print("Spoken Flog = {}".format(self.alreadySpokenFlag))
+            print("Spoken Count Outside= {}".format(self.alreadySpokenCount))
             return False
 
     @intent_file_handler('assitant.nurse.intent')
