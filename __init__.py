@@ -112,17 +112,17 @@ class NurseAssitant(MycroftSkill):
         if self.dictating:
             print("self.dictating == True and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             print("Spoken Count = {}".format(self.alreadySpokenCount))
-            #self.alreadySpokenCount = 0
+            self.alreadySpokenCount = 0
             self.log.info("Dictating: " + utterances)
             self.dictation_stack.append(utterances)
             self.cancel_all_repeating_events()
-            #self.alreadySpokenCount += 1 # Set this flag to indicate that already spoken and no need to repeat
+            self.alreadySpokenCount += 1 # Set this flag to indicate that already spoken and no need to repeat
             self.utteranceLoopCount = 0
             return True
         else:
             print("self.dictating == False and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             self.remove_context("DictationKeyword")
-            if self.utteranceLoopCount < 4: # Only trigger repeat if not user not already spoken
+            if self.utteranceLoopCount < 4 and self.alreadySpokenCount < 1: # Only trigger repeat if not user not already spoken
                 print("Spoken Count Repeat = {}".format(self.alreadySpokenCount))
                 #publish_data(None,None,4)
                 self.utteranceLoopCount += 1
@@ -131,8 +131,8 @@ class NurseAssitant(MycroftSkill):
                 self.utteranceLoopCount += 1
             self.cancel_all_repeating_events()
             print("Spoken Count Before Repeat Call = {}".format(self.alreadySpokenCount))
-            #self.alreadySpokenCount = True
-            #print("Spoken Count After Reset= {}".format(self.alreadySpokenCount))
+            self.alreadySpokenCount = 0
+            print("Spoken Count After Reset= {}".format(self.alreadySpokenCount))
             return False
 
     @intent_file_handler('assitant.nurse.intent')
@@ -148,7 +148,7 @@ class NurseAssitant(MycroftSkill):
         else:
             print("converse() returned False")
             publish_data(None,None,4)
-            #self.alreadySpokenCount = 0
+            self.alreadySpokenCount = 0
             print("Spoken Count After Repeat Call = {}".format(self.alreadySpokenCount))
 
 def create_skill():
