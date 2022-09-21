@@ -24,7 +24,7 @@ class NurseAssitant(MycroftSkill):
         self.settings.setdefault("duration", -1)
 
         self.utteranceLoopCount = 1
-        self.alreadySpokenCount = False
+        #self.alreadySpokenCount = False
         
     def initialize(self):
         self.add_event('recognizer_loop:record_begin',self.handle_record)
@@ -122,7 +122,7 @@ class NurseAssitant(MycroftSkill):
         else:
             print("self.dictating == False and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             self.remove_context("DictationKeyword")
-            if self.utteranceLoopCount < 4: #and not self.alreadySpokenCount: # Only trigger repeat if not user not already spoken
+            if self.utteranceLoopCount < 4: # Only trigger repeat if not user not already spoken
                 #print("Spoken Count Repeat = {}".format(self.alreadySpokenCount))
                 #publish_data(None,None,4)
                 self.utteranceLoopCount += 1
