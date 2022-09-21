@@ -24,7 +24,7 @@ class NurseAssitant(MycroftSkill):
         self.settings.setdefault("duration", -1)
 
         self.utteranceLoopCount = 1
-        self.enterHandelAssitantNurse = 1 # Always enter this function first and thus set to 1 
+        self.enterHandelAssitantNurse = 0
         self.alreadySpokenCount = 0
         
     def initialize(self):
@@ -119,6 +119,7 @@ class NurseAssitant(MycroftSkill):
             self.cancel_all_repeating_events()
             self.alreadySpokenCount += 1 # Set this flag to indicate that already spoken and no need to repeat
             self.utteranceLoopCount = 0
+            self.enterHandelAssitantNurse = 0
             return True
         else:
             print("self.dictating == False and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
