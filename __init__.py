@@ -128,7 +128,9 @@ class NurseAssitant(MycroftSkill):
                 print("Spoken Count No Repeat= {}".format(self.alreadySpokenCount))
                 self.utteranceLoopCount = 0
             self.cancel_all_repeating_events()
-            print("Spoken Count Outside= {}".format(self.alreadySpokenCount))
+            print("Spoken Count Before Reseet = {}".format(self.alreadySpokenCount))
+            self.alreadySpokenCount = 1
+            print("Spoken Count After Reset= {}".format(self.alreadySpokenCount))
             return False
 
     @intent_file_handler('assitant.nurse.intent')
