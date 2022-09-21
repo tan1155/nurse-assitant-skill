@@ -111,6 +111,7 @@ class NurseAssitant(MycroftSkill):
         print("Entered converse()")
         if self.dictating:
             print("self.dictating == True and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
+            print("Spoken Flag = {}".format(self.alreadySpokenFlag))
             self.log.info("Dictating: " + utterances)
             self.dictation_stack.append(utterances)
             self.cancel_all_repeating_events()
@@ -120,11 +121,14 @@ class NurseAssitant(MycroftSkill):
             print("self.dictating == False and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             self.remove_context("DictationKeyword")
             if self.utteranceLoopCount < 4 and not self.alreadySpokenFlag: # Only trigger repeat if not user not already spoken
+                print("Spoken Flog = {}".format(self.alreadySpokenFlag))
                 publish_data(None,None,4)
                 self.utteranceLoopCount += 1
             else:
+                print("Spoken Flog = {}".format(self.alreadySpokenFlag))
                 self.utteranceLoopCount = 0
             self.cancel_all_repeating_events()
+            print("Spoken Flog = {}".format(self.alreadySpokenFlag))
             return False
 
     @intent_file_handler('assitant.nurse.intent')
