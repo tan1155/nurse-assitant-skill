@@ -112,6 +112,7 @@ class NurseAssitant(MycroftSkill):
         if self.dictating:
             print("self.dictating == True and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             print("Spoken Count = {}".format(self.alreadySpokenCount))
+            self.alreadySpokenCount = 1
             self.log.info("Dictating: " + utterances)
             self.dictation_stack.append(utterances)
             self.cancel_all_repeating_events()
