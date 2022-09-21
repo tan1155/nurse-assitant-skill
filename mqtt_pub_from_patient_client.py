@@ -73,6 +73,7 @@ def publish(client, fileName, messageText, topicIndex):
 
             wave.Wave_read.close
 
+            # Check that the sound file is not too short as it will likely be empty of unintelligible message.
             msg =   {
                     'frames': str(base64.b64encode(frames),'utf-8'),
                     'client_id': varClientID,
@@ -94,7 +95,7 @@ def publish(client, fileName, messageText, topicIndex):
 
             print("entered repeat question condition")
 
-            msg_out = 1 # To request to repeat question
+            msg_out = varClientID # To request to repeat question and send its own device ID
 
             rc, mid = client.publish(topicToRepeatQuestion, msg_out, 0, False)
 
