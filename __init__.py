@@ -127,7 +127,7 @@ class NurseAssitant(MycroftSkill):
                 self.utteranceLoopCount += 1
             else:
                 print("Spoken Count No Repeat= {}".format(self.alreadySpokenCount))
-                self.utteranceLoopCount = 0
+                self.utteranceLoopCount = 1
             self.cancel_all_repeating_events()
             print("Spoken Count Before Reseet = {}".format(self.alreadySpokenCount))
             self.alreadySpokenCount = 1
