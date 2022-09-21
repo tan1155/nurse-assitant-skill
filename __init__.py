@@ -116,12 +116,13 @@ class NurseAssitant(MycroftSkill):
             self.log.info("Dictating: " + utterances)
             self.dictation_stack.append(utterances)
             self.cancel_all_repeating_events()
-            self.alreadySpokenCount = True # Set this flag to indicate that already spoken and no need to repeat
+            #self.alreadySpokenCount = True # Set this flag to indicate that already spoken and no need to repeat
+            self.utteranceLoopCount = 4
             return True
         else:
             print("self.dictating == False and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             self.remove_context("DictationKeyword")
-            if self.utteranceLoopCount < 4 and not self.alreadySpokenCount: # Only trigger repeat if not user not already spoken
+            if self.utteranceLoopCount < 4: #and not self.alreadySpokenCount: # Only trigger repeat if not user not already spoken
                 print("Spoken Count Repeat = {}".format(self.alreadySpokenCount))
                 #publish_data(None,None,4)
                 self.utteranceLoopCount += 1
@@ -130,7 +131,7 @@ class NurseAssitant(MycroftSkill):
                 self.utteranceLoopCount = 1
             self.cancel_all_repeating_events()
             print("Spoken Count Before Reseet = {}".format(self.alreadySpokenCount))
-            self.alreadySpokenCount = True
+            #self.alreadySpokenCount = True
             print("Spoken Count After Reset= {}".format(self.alreadySpokenCount))
             return False
 
@@ -147,8 +148,7 @@ class NurseAssitant(MycroftSkill):
         else:
             print("converse() returned False")
             publish_data(None,None,4)
-            self.alreadySpokenCount = True
-            pass
+            #self.alreadySpokenCount = True
 
 def create_skill():
     return NurseAssitant()
