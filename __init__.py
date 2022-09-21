@@ -142,7 +142,7 @@ class NurseAssitant(MycroftSkill):
                 publish_data(None,None,4)
                 print("Published data in dictating = False")
 
-            self.dictating = True
+            #self.dictating = True
 
             return False
 
