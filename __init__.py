@@ -138,11 +138,12 @@ class NurseAssitant(MycroftSkill):
             #self.alreadySpokenCount = 0
             print("enterHandleAssitantNurse Dictating is False = {}".format(self.enterHandelAssitantNurse))
 
+            print("set self.dictating to False")
+            self.dictating = False
+            
             if self.enterHandelAssitantNurse == 0:
                 publish_data(None,None,4)
                 print("Published data in dictating = False")
-
-            #self.dictating = True
 
             return False
 
