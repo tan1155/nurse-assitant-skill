@@ -22,10 +22,6 @@ class NurseAssitant(MycroftSkill):
         self.settings.setdefault("channels", 1)
         self.settings.setdefault("file_path", 'mycroft-recording.wav')
         self.settings.setdefault("duration", -1)
-
-        self.utteranceLoopCount = 1
-        self.enterHandelAssitantNurse = 0
-        self.alreadySpokenCount = 0
         
     def initialize(self):
         self.add_event('recognizer_loop:record_begin',self.handle_record)
@@ -51,7 +47,7 @@ class NurseAssitant(MycroftSkill):
 
         try:
             # Publish the data to mqtt
-            publish_data("example.wav",line,1)
+            publish_data("example.wav",line[0])
             print("I got out of publish_data function.")
         except Exception as e:
             print("Error: ", e)
@@ -98,7 +94,6 @@ class NurseAssitant(MycroftSkill):
                                          self.start_time).total_seconds()
 
     def call_nurse(self,message):
-        print("Entered call_nurse().")
         if self.dictating:
             self.dictating = False
             file_name = "example.txt"
@@ -109,66 +104,21 @@ class NurseAssitant(MycroftSkill):
             	self.write_line_to_file(file_name,self.dictation_stack)
 
     def converse(self, utterances, lang="en-us"):
-        print("Entered converse()")
         if self.dictating:
-            print("self.dictating == True and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
-            print("Spoken Count = {}".format(self.alreadySpokenCount))
-            print("enterHandleAssitantNurse Dictating is True = {}".format(self.enterHandelAssitantNurse))
-            self.alreadySpokenCount = 0
             self.log.info("Dictating: " + utterances)
             self.dictation_stack.append(utterances)
-            self.cancel_all_repeating_events()
-            self.alreadySpokenCount += 1 # Set this flag to indicate that already spoken and no need to repeat
-            self.utteranceLoopCount = 0
-            print("set enterHandleAssitantNurse to 0")
-            self.enterHandelAssitantNurse = 0
             return True
         else:
-            print("self.dictating == False and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             self.remove_context("DictationKeyword")
-            #if self.utteranceLoopCount < 2: # Only trigger repeat if not user not already spoken
-            #    print("Spoken Count Repeat = {}".format(self.alreadySpokenCount))
-                #publish_data(None,None,4)
-            #    self.utteranceLoopCount += 1
-            #else:
-            #    print("Spoken Count No Repeat= {}".format(self.alreadySpokenCount))
-            #    self.utteranceLoopCount += 1
-            self.cancel_all_repeating_events()
-            #print("Spoken Count Before Repeat Call = {}".format(self.alreadySpokenCount))
-            #self.alreadySpokenCount = 0
-            print("enterHandleAssitantNurse Dictating is False = {}".format(self.enterHandelAssitantNurse))
-
-            print("set self.dictating to False")
-            self.dictating = False
-            
-            if self.enterHandelAssitantNurse == 0:
-                publish_data(None,None,4)
-                print("Published data in dictating = False")
-
             return False
 
     @intent_file_handler('assitant.nurse.intent')
     def handle_assitant_nurse(self, message):
         self.dictation_stack = []
         self.dictating = True
-        print("Before speak_dialog")
         self.speak_dialog('assitant.nurse')
-        self.enterHandelAssitantNurse = 1
-        print("Before entering converse().")
-        if self.converse(message.data.get('utterance')):
-            print("converse() returned True")
-            self.call_nurse(message)
-        else:
-            print("converse() returned False")
-            if self.utteranceLoopCount < 2:
-                print("before calling enterHandleAssitantNurse publish_data function")
-                print("enterHandleAssitantNurse value in if clause of handleAssitantNurse function = {}".format(self.enterHandelAssitantNurse))
-                publish_data(None,None,4)
-                self.utteranceLoopCount += 1
-            #self.alreadySpokenCount = 0
-            #print("Spoken Count After Repeat Call = {}".format(self.alreadySpokenCount))
-            print("set enterHandleAssitantNurse to 0 in else clause of handleAsssitnatNurse function")
-            self.enterHandelAssitantNurse = 0
+        self.converse(message.data.get('utterance'))
+        self.call_nurse(message)
 
 def create_skill():
     return NurseAssitant()
