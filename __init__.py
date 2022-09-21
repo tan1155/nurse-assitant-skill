@@ -130,7 +130,7 @@ class NurseAssitant(MycroftSkill):
                 self.utteranceLoopCount = 1
             self.cancel_all_repeating_events()
             print("Spoken Count Before Reseet = {}".format(self.alreadySpokenCount))
-            self.alreadySpokenCount = False
+            self.alreadySpokenCount = True
             print("Spoken Count After Reset= {}".format(self.alreadySpokenCount))
             return False
 
@@ -147,7 +147,7 @@ class NurseAssitant(MycroftSkill):
         else:
             print("converse() returned False")
             publish_data(None,None,4)
-            self.alreadySpokenCount = False
+            self.alreadySpokenCount = True
             pass
 
 def create_skill():
