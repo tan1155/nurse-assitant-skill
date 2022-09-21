@@ -24,6 +24,7 @@ class NurseAssitant(MycroftSkill):
         self.settings.setdefault("duration", -1)
 
         self.utteranceLoopCount = 1
+        self.enterHandelAssitantNurse = 1 # Always enter this function first and thus set to 1 
         self.alreadySpokenCount = 0
         
     def initialize(self):
@@ -133,6 +134,10 @@ class NurseAssitant(MycroftSkill):
             print("Spoken Count Before Repeat Call = {}".format(self.alreadySpokenCount))
             self.alreadySpokenCount = 0
             print("Spoken Count After Reset= {}".format(self.alreadySpokenCount))
+            
+            if self.enterHandelAssitantNurse == 0:
+                publish_data(None,None,4)
+
             return False
 
     @intent_file_handler('assitant.nurse.intent')
@@ -141,6 +146,7 @@ class NurseAssitant(MycroftSkill):
         self.dictating = True
         print("Before speak_dialog")
         self.speak_dialog('assitant.nurse')
+        self.enterHandelAssitantNurse = 1
         print("Before entering converse().")
         if self.converse(message.data.get('utterance')):
             print("converse() returned True")
@@ -150,6 +156,7 @@ class NurseAssitant(MycroftSkill):
             publish_data(None,None,4)
             self.alreadySpokenCount = 0
             print("Spoken Count After Repeat Call = {}".format(self.alreadySpokenCount))
+            self.enterHandelAssitantNurse = 0
 
 def create_skill():
     return NurseAssitant()
