@@ -124,20 +124,21 @@ class NurseAssitant(MycroftSkill):
         else:
             print("self.dictating == False and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
             self.remove_context("DictationKeyword")
-            if self.utteranceLoopCount < 4 and self.alreadySpokenCount < 1: # Only trigger repeat if not user not already spoken
-                print("Spoken Count Repeat = {}".format(self.alreadySpokenCount))
+            #if self.utteranceLoopCount < 2: # Only trigger repeat if not user not already spoken
+            #    print("Spoken Count Repeat = {}".format(self.alreadySpokenCount))
                 #publish_data(None,None,4)
-                self.utteranceLoopCount += 1
-            else:
-                print("Spoken Count No Repeat= {}".format(self.alreadySpokenCount))
-                self.utteranceLoopCount += 1
+            #    self.utteranceLoopCount += 1
+            #else:
+            #    print("Spoken Count No Repeat= {}".format(self.alreadySpokenCount))
+            #    self.utteranceLoopCount += 1
             self.cancel_all_repeating_events()
-            print("Spoken Count Before Repeat Call = {}".format(self.alreadySpokenCount))
-            self.alreadySpokenCount = 0
-            print("Spoken Count After Reset= {}".format(self.alreadySpokenCount))
-            
+            #print("Spoken Count Before Repeat Call = {}".format(self.alreadySpokenCount))
+            #self.alreadySpokenCount = 0
+            print("enterHandleAssitantNurse = {}".format(self.enterHandelAssitantNurse))
+
             if self.enterHandelAssitantNurse == 0:
                 publish_data(None,None,4)
+                print("Published data in dictating = False")
 
             return False
 
@@ -154,8 +155,10 @@ class NurseAssitant(MycroftSkill):
             self.call_nurse(message)
         else:
             print("converse() returned False")
-            publish_data(None,None,4)
-            self.alreadySpokenCount = 0
+            if self.utteranceLoopCount < 2:
+                publish_data(None,None,4)
+                self.utteranceLoopCount += 1
+            #self.alreadySpokenCount = 0
             print("Spoken Count After Repeat Call = {}".format(self.alreadySpokenCount))
             self.enterHandelAssitantNurse = 0
 
