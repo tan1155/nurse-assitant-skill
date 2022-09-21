@@ -110,27 +110,6 @@ class NurseAssitant(MycroftSkill):
         print("Entered converse()")
         if self.dictating:
             print("self.dictating == True and utteranceLoopCount = {}".format(str(self.utteranceLoopCount)))
-            #if utterances:
-            #    utteranceIsTrue = False
-            #    for item in utterances:
-            #        if item in self.read_file("/home/francis/mycroft-core/skills/nurse-assitant-skill/vocab/en-us/assitant-nurse.txt"):
-            #            utteranceIsTrue = True
-            #        else:
-            #            utteranceIsTrue = False
-            #    if utteranceIsTrue:    
-            #        self.log.info("Dictating: " + utterances)
-            #        self.dictation_stack.append(utterances)
-            #        print("Utterance is True and found in assitant-nurse.txt.")
-            #        return True
-            #    else:
-            #        self.remove_context("DictationKeyword")
-            #        print("Utterance is True but but not found and supposed to trigger to ask question.")
-                    #publish_data(None,None,4)
-            #        return False
-            #else:
-            #    print("Utterance is False.")
-            #    self.remove_context("DictationKeyword")
-            #    return False
             self.log.info("Dictating: " + utterances)
             self.dictation_stack.append(utterances)
             self.cancel_all_repeating_events()

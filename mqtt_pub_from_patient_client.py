@@ -15,7 +15,7 @@ broker = mqconfig.hostIP
 port = mqconfig.port
 topicToServer = mqTopic[1]
 topicToRepeatQuestion = mqTopic[4]
-client_id = deviceID["device_010"]
+varClientID = deviceID["device_010"]
 
 # Here's the audio text string to be passed.
 #request_string = "i am bleeding"
@@ -33,7 +33,7 @@ def connect_mqtt():
         else:
             print("Failed to connect, return code %d\n", rc)
     # Set Connecting Client ID
-    client = mqtt_client.Client(client_id)
+    client = mqtt_client.Client(varClientID)
 #    client.username_pw_set(username, password)
     client.on_connect = on_connect
     client.connect(broker, port)
@@ -75,7 +75,7 @@ def publish(client, fileName, messageText, topicIndex):
 
             msg =   {
                     'frames': str(base64.b64encode(frames),'utf-8'),
-                    'client_id': client_id,
+                    'client_id': varClientID,
                     'request_string': str(messageText[0]),
                     'n_channels': str(n_channels),
                     'sample_width': str(sample_width),
