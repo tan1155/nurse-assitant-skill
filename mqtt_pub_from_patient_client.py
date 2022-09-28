@@ -77,7 +77,7 @@ def publish(client, fileName, messageText, topicIndex):
             msg =   {
                     'frames': str(base64.b64encode(frames),'utf-8'),
                     'client_id': varClientID,
-                    'request_string': str(messageText[0]),
+                    'request_string': str(messageText),
                     'n_channels': str(n_channels),
                     'sample_width': str(sample_width),
                     'framerate': str(framerate),
@@ -88,7 +88,7 @@ def publish(client, fileName, messageText, topicIndex):
 
             msg_out = json.dumps(msg)
 
-            print(str(messageText[0]) + " : " + str(messageText))
+            print(str(messageText))
             print("before publishing to mqtt broker")
             rc, mid = client.publish(topicToServer, msg_out, 0, False)
 
