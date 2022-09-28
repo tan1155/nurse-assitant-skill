@@ -88,6 +88,7 @@ def publish(client, fileName, messageText, topicIndex):
 
             msg_out = json.dumps(msg)
 
+            print(str(messageText[0]) + " : " + str(messageText))
             print("before publishing to mqtt broker")
             rc, mid = client.publish(topicToServer, msg_out, 0, False)
 
